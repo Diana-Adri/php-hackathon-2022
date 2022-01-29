@@ -13,7 +13,21 @@ You have estimated it takes 4 weeks to build this solution. You have 3 days. Goo
 
 ## Technical documentation
 ### Data and Domain model
-In this section, please describe the main entities you managed to identify, the relationships between them and how you mapped them in the database.
+We have 3 entities: 
+
+Interval
+- This entity has a start and end date, it will be used by a foreign key in the Program entity to identify a specific interval for the sport program.
+- id - PK int; start_date - datetime; end_date - datetime;
+
+Program 
+- This entity describes the sport program as requested in the brief. It has a maximum number of participants, a room in which it will happen, the name of the sport
+activity and a time interval.
+- id - PK int; time_interval_id - FK (Interval) int; max_participants - int; room - int; sport - varchar(255)
+
+Bookings
+- This entity logs the participation of a user, identified by CNP into a specific Program identified with a foreign key.
+- id - PK int; program_id FK (Program) - int; user_cnp - int;
+
 ### Application architecture
 In this section, please provide a brief overview of the design of your application and highlight the main components and the interaction between them.
 ###  Implementation
@@ -35,11 +49,12 @@ Please give a brief review of the 3rd party libraries you used and how/ why you'
 Please fill in the following table with the technologies you used in order to work at your application. Feel free to add more rows if you want us to know about anything else you used.
 | Name | Choice |
 | ------ | ------ |
-| Operating system (OS) | e.g. Ubuntu 20.04 |
-| Database  | e.g. MySQL 8.0|
-| Web server| e.g. Nginx |
-| PHP | e.g. 7.0 |
-| IDE | e.g. PhpStorm |
+| Operating system (OS) | Windows 10 |
+| Database  | MariaDB 10.4 |
+| Web server| symfony server / Apache |
+| PHP | 7.4 |
+| IDE | PhpStorm |
+| API CLIENT | Postman | 
 
 ### Testing
 In this section, please list the steps and/ or tools you've used in order to test the behaviour of your solution.
