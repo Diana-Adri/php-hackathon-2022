@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Interval;
-use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +16,6 @@ class IntervalRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Program::class);
+        parent::__construct($registry, Interval::class);
     }
 }

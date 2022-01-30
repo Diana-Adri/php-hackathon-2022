@@ -3,110 +3,61 @@
 namespace App\Entity;
 
 use App\Repository\IntervalRepository;
-use DateTime;
-use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="interval")
  * @ORM\Entity(repositoryClass=IntervalRepository::class)
+ * @ORM\Table(name="`interval`")
  */
 class Interval
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="start_date", type="datetime")
+     * @ORM\Column(type="datetime")
      */
-    private $start_date;
+    private $start_datetime;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="end_date", type="datetime")
+     * @ORM\Column(type="datetime")
      */
-    private $end_date;
+    private $stop_datetime;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Program::class, mappedBy="TimeInterval", orphanRemoval=true)
-     */
-    private $programs;
 
     public function __construct()
     {
-        $this->programs = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getStartDate()
+    public function getStartDatetime(): ?\DateTimeInterface
     {
-        return $this->start_date;
+        return $this->start_datetime;
     }
 
-    public function setStartDate(DateTimeInterface $start_date)
+    public function setStartDatetime(\DateTimeInterface $start_datetime): self
     {
-        $this->start_date = $start_date;
-        return $this;
-    }
-
-    public function getEndDate()
-    {
-        return $this->end_date;
-    }
-
-    public function setEndDate(DateTimeInterface $end_date)
-    {
-        $this->end_date = $end_date;
-        return $this;
-    }
-
-    /**
-     * @return Collection|Program[]
-     */
-    public function getPrograms(): Collection
-    {
-        return $this->programs;
-    }
-
-    public function addProgram(Program $program): self
-    {
-        if (!$this->programs->contains($program)) {
-            $this->programs[] = $program;
-            $program->setTimeInterval($this);
-        }
+        $this->start_datetime = $start_datetime;
 
         return $this;
     }
 
-    public function removeProgram(Program $program): self
+    public function getStopDatetime(): ?\DateTimeInterface
     {
-        if ($this->programs->removeElement($program)) {
-            // set the owning side to null (unless already changed)
-            if ($program->getTimeInterval() === $this) {
-                $program->setTimeInterval(null);
-            }
-        }
+        return $this->stop_datetime;
+    }
+
+    public function setStopDatetime(\DateTimeInterface $stop_datetime): self
+    {
+        $this->stop_datetime = $stop_datetime;
 
         return $this;
     }

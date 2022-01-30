@@ -36,8 +36,9 @@ class Utility
     {
         $end_time_formatted = DateTime::createFromFormat('H:i', $end_time)->format("d-M-Y H:i:s");
         $closing_time_formatted = DateTime::createFromFormat('H:i', self::CLOSING_TIME)->format("d-M-Y H:i:s");
+        $opening_time_formatted = DateTime::createFromFormat('H:i', self::OPEN_TIME)->format("d-M-Y H:i:s");
 
-        if ($end_time_formatted <= $closing_time_formatted) {
+        if ($end_time_formatted <= $closing_time_formatted && $end_time_formatted >= $opening_time_formatted) {
             return true;
         }
         return false;
@@ -47,8 +48,9 @@ class Utility
     {
         $start_time_formatted = DateTime::createFromFormat('H:i', $start_time)->format("d-M-Y H:i:s");
         $opening_time_formatted = DateTime::createFromFormat('H:i', self::OPEN_TIME)->format("d-M-Y H:i:s");
+        $closing_time_formatted = DateTime::createFromFormat('H:i', self::CLOSING_TIME)->format("d-M-Y H:i:s");
 
-        if ($start_time_formatted >= $opening_time_formatted) {
+        if ($start_time_formatted >= $opening_time_formatted && $start_time_formatted <= $closing_time_formatted) {
             return true;
         }
         return false;
@@ -108,7 +110,13 @@ class Utility
         return false;
     }
 
-    public static function validateCNP(int $cnp)
+    /**
+     * Check number is valid CNP
+     *
+     * @param int $cnp
+     * @return bool
+     */
+    public static function validateCNP(int $cnp): bool
     {
         if (strlen($cnp) == 13) {
             return true;

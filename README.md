@@ -36,8 +36,8 @@ For each of the following functionalities, please tick the box if you implemente
 
 [x] Brew coffee \
 [x] Create programme \
-[ ] Delete programme \
-[ ] Book a programme 
+[x] Delete programme \
+[x] Book a programme 
 
 ##### Business rules
 Please highlight all the validations and mechanisms you identified as necessary in order to avoid inconsistent states and apply the business logic in your application.
@@ -59,6 +59,7 @@ Please fill in the following table with the technologies you used in order to wo
 ### Testing
 In this section, please list the steps and/ or tools you've used in order to test the behaviour of your solution.
 
+##
 Program Create test:
 
 URL: http://127.0.0.1:8000/api/programs
@@ -67,13 +68,38 @@ Header: admin-key:3FdpSrH93Z
 Payload:
 {
 "max_participants": 10,
-"room": 5,
+"room": 7,
 "sport": "PILATES",
 "interval": 
     {
     "start_time": "01/25/2022 06:00",
-    "end_time": "01/25/2022 09:00"
+    "end_time": "01/25/2022 07:00"
     }
+}
+
+##
+Program Delete test:
+URL: http://127.0.0.1:8000/api/programs
+Method: DELETE
+Header: admin-key:3FdpSrH93Z
+Payload:
+{
+    "id":1
+}
+
+##
+Program Get test:
+URL: http://127.0.0.1:8000/api/programs
+Method: GET
+
+##
+Booking Create test:
+URL: http://127.0.0.1:8000/api/bookings
+Method: POST
+Payload:
+{
+    "program_id":11,
+    "CNP": 4932942394111
 }
 
 ## Feedback

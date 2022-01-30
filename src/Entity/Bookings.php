@@ -17,10 +17,6 @@ class Bookings
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $user_cnp;
 
     /**
      * @ORM\ManyToOne(targetEntity=Program::class, inversedBy="bookings")
@@ -28,21 +24,14 @@ class Bookings
      */
     private $Program;
 
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    private $user_cnp;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUserCnp(): ?int
-    {
-        return $this->user_cnp;
-    }
-
-    public function setUserCnp(int $user_cnp): self
-    {
-        $this->user_cnp = $user_cnp;
-
-        return $this;
     }
 
     public function getProgram(): ?Program
@@ -53,6 +42,18 @@ class Bookings
     public function setProgram(?Program $Program): self
     {
         $this->Program = $Program;
+
+        return $this;
+    }
+
+    public function getUserCnp(): ?string
+    {
+        return $this->user_cnp;
+    }
+
+    public function setUserCnp(string $user_cnp): self
+    {
+        $this->user_cnp = $user_cnp;
 
         return $this;
     }
