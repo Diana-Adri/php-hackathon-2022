@@ -17,12 +17,12 @@ We have 3 entities:
 
 Interval
 - This entity has a start and end date, it will be used by a foreign key in the Program entity to identify a specific interval for the sport program.
-- id - PK int; start_date - datetime; end_date - datetime;
+- id - PK int; start_datetime - datetime; end_datetime - datetime;
 
 Program 
 - This entity describes the sport program as requested in the brief. It has a maximum number of participants, a room in which it will happen, the name of the sport
 activity and a time interval.
-- id - PK int; time_interval_id - FK (Interval) int; max_participants - int; room - int; sport - varchar(255)
+- id - PK int; time_interval_id - FK (Interval) int; max_participants - int; room - int; sport - varchar(255);
 
 Bookings
 - This entity logs the participation of a user, identified by CNP into a specific Program identified with a foreign key.
@@ -30,6 +30,27 @@ Bookings
 
 ### Application architecture
 In this section, please provide a brief overview of the design of your application and highlight the main components and the interaction between them.
+
+We have 3 main areas of interest:
+-Entity
+    This part of the program makes the connection between a PHP class with specific variables that are annotated in order for the Doctrine ORM 
+    to interpret as a Table. This also has getters, setters and constructors.
+-Controller
+    This part handles all requests received on the specified routes in the config/routes.yaml file and interacts with the Entity and Repository 
+    parts of the system.
+-Repository
+    This part of the system, handles the DB interaction, when files should be saved/searched on specific criteria.
+
+In terms of application flow it goes like this:
+- Request received
+- Matched route from routes.yaml
+- Send to specific controller method
+- Validate access/input data
+- Execute controller method
+- Return response either message or the created entity.
+
+Lastly there is a helper class called Utility.php where some validation logic is implemented. 
+
 ###  Implementation
 ##### Functionalities
 For each of the following functionalities, please tick the box if you implemented it and describe its input and output in your application:
@@ -42,19 +63,40 @@ For each of the following functionalities, please tick the box if you implemente
 ##### Business rules
 Please highlight all the validations and mechanisms you identified as necessary in order to avoid inconsistent states and apply the business logic in your application.
 
+The following validations were done:
+- check that the starting + ending time of a program is within the opening hours of the sports center
+- check that the starting time is before the ending time
+- check that the times provided for program creations are valid datetime strings
+- check if interval exists before creating again
+- check room is not occupied by another program in the same time interval (not just same interval)
+- check if program doesn't already exist
+- check admin header for create/delete operations on program
+- check sports from program is valid (only some sports are allowed)
+- check room key is valid (only rooms from 1-10 exist)
+- check user CNP is a valid CNP (13 integers)
+- check program exist on bookings
+- check user doesn't already have a booking on that program
+- check program booking is not full
+- check user is not already part of a class in the same interval
+
 ##### 3rd party libraries (if applicable)
 Please give a brief review of the 3rd party libraries you used and how/ why you've integrated them into your project.
 
+Doctrine ORM - used annotations for describing DB entities as well as composing queries in repository
+Symfony dependencies (Request, Response, AbstractController, Repository) - access to the request parameters and creating easy responses
+
 ##### Environment
 Please fill in the following table with the technologies you used in order to work at your application. Feel free to add more rows if you want us to know about anything else you used.
-| Name | Choice |
-| ------ | ------ |
-| Operating system (OS) | Windows 10 |
-| Database  | MariaDB 10.4 |
-| Web server| symfony server / Apache |
-| PHP | 7.4 |
-| IDE | PhpStorm |
-| API CLIENT | Postman | 
+
+| Name                  | Choice                      |
+|-----------------------|-----------------------------|
+| Operating system (OS) | Windows 10                  |
+| Database              | MySql 5.7                   |
+| Web server            | symfony server / Apache 2.4 |
+| PHP                   | 7.4                         |
+| IDE                   | PhpStorm                    |
+| API CLIENT            | Postman                     | 
+| Symfony               | 5.3                         |
 
 ### Testing
 In this section, please list the steps and/ or tools you've used in order to test the behaviour of your solution.
@@ -105,14 +147,23 @@ Payload:
 ## Feedback
 In this section, please let us know what is your opinion about this experience and how we can improve it:
 
-1. Have you ever been involved in a similar experience? If so, how was this one different?
+1. Have you ever been involved in a similar experience? If so, how was this one different? 
+   No, this is the first hackathon I attend. The only thing similar to this task were university projects.
 2. Do you think this type of selection process is suitable for you?
+   Yes, I appreciate the practical aspect and that it was not just theoretical questions (so far) and you can access external information sources like google/youtube and you don't have to re-invent the wheel while being
+   under pressure.
 3. What's your opinion about the complexity of the requirements?
+    I think the project was complex, it required some specific knowledge in a framework, probably easier than pure php, I think most requirements have been completed, but I'm sure there are some that are unaddressed 
+    and would take some more time and experience to make it a "good solution".
 4. What did you enjoy the most?
+    I think that the fact it was over 3 days.
 5. What was the most challenging part of this anti hackathon?
+    Setting up the framework + tools (I used a new computer).
 6. Do you think the time limit was suitable for the requirements?
-7. Did you find the resources you were sent on your email useful?
+    Yes, I think there was enough time for a good but not perfect solution.
+7. Did you find the resources you were sent on your email* *useful?
+    Yes they were useful but since you suggested Laravel/Symfony or just php, I think the Symfony documentation + Symfony set-up guide would help, maybe some information about APIs
 8. Is there anything you would like to improve to your current implementation?
+    The payload that is sent + the response that is give might be a bit more user-friendly (even if it's API so computer to computer)
 9. What would you change regarding this anti hackathon?
-
-Repo forked and cloned!!!
+    Maybe if there was a code skeleton like symfony/laravel skeleton implementation that can be run to have a working server and then that you can build on.
