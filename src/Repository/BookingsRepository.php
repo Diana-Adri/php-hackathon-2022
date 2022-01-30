@@ -19,32 +19,16 @@ class BookingsRepository extends ServiceEntityRepository
         parent::__construct($registry, Bookings::class);
     }
 
-    // /**
-    //  * @return Bookings[] Returns an array of Bookings objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getBookingsCountByProgram($program_id)
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Bookings
-    {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('b.Program = :program_id')
+            ->orderBy('b.Program', 'DESC')
+            ->select('count(b.id)')
+            ->setParameter('program_id', $program_id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
+
 }

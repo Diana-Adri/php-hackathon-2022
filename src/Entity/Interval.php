@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\IntervalRepository;
+use DateTime;
+use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,7 +25,7 @@ class Interval
     private $id;
 
     /**
-     * @var string
+     * @var DateTime
      *
      * @ORM\Column(name="start_date", type="datetime")
      */
@@ -57,34 +59,23 @@ class Interval
     /**
      * @return string
      */
-    public function getStartDate(): string
+    public function getStartDate()
     {
         return $this->start_date;
     }
 
-    /**
-     * @param string $start_date
-     * @return Interval
-     */
-    public function setStartDate(string $start_date): Interval
+    public function setStartDate(DateTimeInterface $start_date)
     {
         $this->start_date = $start_date;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEndDate(): string
+    public function getEndDate()
     {
         return $this->end_date;
     }
 
-    /**
-     * @param string $end_date
-     * @return Interval
-     */
-    public function setEndDate(string $end_date): Interval
+    public function setEndDate(DateTimeInterface $end_date)
     {
         $this->end_date = $end_date;
         return $this;

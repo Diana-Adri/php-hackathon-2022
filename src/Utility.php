@@ -2,6 +2,8 @@
 
 namespace App;
 
+use DateTime;
+
 class Utility
 {
     //randomly generated keys - random.org
@@ -19,13 +21,49 @@ class Utility
     ];
 
     //specific allowed sports
-    private const SPORT_TYPE =[
+    private const SPORT_TYPE = [
         'PILATES',
         'CYCLING',
         'INTERVALS',
         'ABS',
         'SQUASH'
     ];
+
+    private const OPEN_TIME = "06:00";
+    private const CLOSING_TIME = "22:00";
+
+    public static function checkClosingTime($end_time)
+    {
+        $end_time_formatted = DateTime::createFromFormat('H:i', $end_time)->format("d-M-Y H:i:s");
+        $closing_time_formatted = DateTime::createFromFormat('H:i', self::CLOSING_TIME)->format("d-M-Y H:i:s");
+
+        if ($end_time_formatted <= $closing_time_formatted) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function checkOpeningTime($start_time)
+    {
+        $start_time_formatted = DateTime::createFromFormat('H:i', $start_time)->format("d-M-Y H:i:s");
+        $opening_time_formatted = DateTime::createFromFormat('H:i', self::OPEN_TIME)->format("d-M-Y H:i:s");
+
+        if ($start_time_formatted >= $opening_time_formatted) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function validateTimeDifference($start_time, $end_time)
+    {
+        $start_time_formatted = DateTime::createFromFormat('H:i', $start_time)->format("d-M-Y H:i:s");
+        $end_time_formatted = DateTime::createFromFormat('H:i', $end_time)->format("d-M-Y H:i:s");
+        if ($end_time_formatted > $start_time_formatted) {
+            return true;
+        }
+        return false;
+
+    }
 
 
     /**
@@ -34,12 +72,12 @@ class Utility
      * @param string $admin_key
      * @return bool
      */
-    public static function checkAdminKey(string $admin_key){
-        if(in_array($admin_key,self::ADMIN_KEYS)){
+    public static function checkAdminKey(string $admin_key)
+    {
+        if (in_array($admin_key, self::ADMIN_KEYS)) {
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
     /**
@@ -48,12 +86,12 @@ class Utility
      * @param string $sport_key
      * @return bool
      */
-    public static function checkSportKey(string $sport_key){
-        if(in_array($sport_key,self::SPORT_TYPE)){
+    public static function checkSportKey(string $sport_key)
+    {
+        if (in_array($sport_key, self::SPORT_TYPE)) {
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
     /**
@@ -62,11 +100,19 @@ class Utility
      * @param int $room_id
      * @return bool
      */
-    public static function checkRoomKey(int $room_id){
-        if($room_id > 0 && $room_id <= 10){
+    public static function checkRoomKey(int $room_id)
+    {
+        if ($room_id > 0 && $room_id <= 10) {
             return true;
-        }else{
-            return false;
         }
+        return false;
+    }
+
+    public static function validateCNP(int $cnp)
+    {
+        if (strlen($cnp) == 13) {
+            return true;
+        }
+        return false;
     }
 }

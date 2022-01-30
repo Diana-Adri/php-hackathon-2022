@@ -35,7 +35,7 @@ In this section, please provide a brief overview of the design of your applicati
 For each of the following functionalities, please tick the box if you implemented it and describe its input and output in your application:
 
 [x] Brew coffee \
-[ ] Create programme \
+[x] Create programme \
 [ ] Delete programme \
 [ ] Book a programme 
 
@@ -58,6 +58,23 @@ Please fill in the following table with the technologies you used in order to wo
 
 ### Testing
 In this section, please list the steps and/ or tools you've used in order to test the behaviour of your solution.
+
+Program Create test:
+
+URL: http://127.0.0.1:8000/api/programs
+Method: POST
+Header: admin-key:3FdpSrH93Z
+Payload:
+{
+"max_participants": 10,
+"room": 5,
+"sport": "PILATES",
+"interval": 
+    {
+    "start_time": "01/25/2022 06:00",
+    "end_time": "01/25/2022 09:00"
+    }
+}
 
 ## Feedback
 In this section, please let us know what is your opinion about this experience and how we can improve it:

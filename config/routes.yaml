@@ -1,3 +1,29 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+program_list:
+  path: /api/programs
+  controller: App\Controller\ProgramController:getAction
+  methods: [GET]
+
+program_create:
+  path: /api/programs
+  controller: App\Controller\ProgramController:postAction
+  methods: [POST]
+
+program_delete:
+  path: /api/programs
+  controller: App\Controller\ProgramController:deleteAction
+  methods: [DELETE]
+
+intervals_list:
+  path: /api/intervals
+  controller: App\Controller\IntervalController:getAction
+  methods: [GET]
+
+bookings_list:
+  path: /api/bookings
+  controller: App\Controller\BookingController:getAction
+  methods: [GET]
+
+bookings_create:
+  path: /api/bookings
+  controller: App\Controller\BookingController:postAction
+  methods: [POST]
